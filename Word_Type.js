@@ -12,10 +12,10 @@ let currentWordHasError = false;
 let isTestFinished = false; 
 let sentences = [
   'the sky was painted in shades of orange and pink as the sun dipped below the horizon', 
-   'casting long shadows across the quiet streets a gentle breeze rustled the leaves of'
-//  'the old oak trees lining the sidewalk carrying the faint scent of rain from a storm',
-//  'that had passed earlier in the afternoon in the distance the soft hum of traffic ',
-//  'blended with the occasional chirp of crickets creating a soothing evening symphony'
+   'casting long shadows across the quiet streets a gentle breeze rustled the leaves of',
+  'the old oak trees lining the sidewalk carrying the faint scent of rain from a storm',
+  'that had passed earlier in the afternoon in the distance the soft hum of traffic ',
+  'blended with the occasional chirp of crickets creating a soothing evening symphony'
 ];
 let total_length = sentences.join("").replace(/ /g, "").length;
 
@@ -73,13 +73,9 @@ function handleTyping(event) {
 
   let end_time = Date.now();
   let time_passed = (end_time - start_time) / 1000;
-
   let timer = (end_time - start_session) / 1000;
   
 
-
-
-  
   if (event.key === "Backspace" && i > 0) { 
     i--;
     let charToReset = originalText[i];
@@ -90,6 +86,7 @@ function handleTyping(event) {
     paragraph.innerHTML = displayedText.join("");
     return;
   }
+
 
   if (i < originalText.length) { 
     let expectedChar = originalText[i];
@@ -134,6 +131,7 @@ function handleTyping(event) {
     paragraph.innerHTML = displayedText.join("");
   }
   
+
   let wpm = correct_words * 60 / time_passed;
   update_wpm(wpm);
   update_timer(timer);
@@ -200,6 +198,7 @@ function handleTyping(event) {
     if (container) container.style.marginLeft = "500px";
   }
 }
+
 
 document.addEventListener("keydown", handleTyping);
 
