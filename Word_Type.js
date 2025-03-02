@@ -213,7 +213,9 @@ document.addEventListener("keydown", function(event) {
         currentWordHasError = false;
         isTestFinished = false;
         wpm = 0;
-        update_wpm(wpm);        
+        update_timer();
+        update_wpm(wpm);  
+        Clock.style.display = 'block';      
         WordsPerMinute.style.display = 'block';
         let container = document.getElementById("type");
         if (container) container.style.marginLeft = "0"; 
