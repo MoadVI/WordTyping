@@ -1,0 +1,73 @@
+@keyframes flameEffect {
+    0% {
+        border-color: cyan;
+        box-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px blue, 0 0 20px darkcyan;
+    }
+    25% {
+        border-color: rgb(131, 255, 255);
+        box-shadow: 0 0 5px lightcyan, 0 0 10px rgb(146, 255, 255), 0 0 15px deepskyblue, 0 0 20px cyan;
+    }
+    50% {
+        border-color: cyan;
+        box-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px cyan, 0 0 20px deepskyblue;
+    }
+    75% {
+        border-color: mediumturquoise;
+        box-shadow: 0 0 5px mediumturquoise, 0 0 10px mediumturquoise, 0 0 15px rgb(3, 236, 225), 0 0 20px cyan;
+    }
+    100% {
+        border-color: cyan;
+        box-shadow: 0 0 5px cyan, 0 0 10px cyan, 0 0 15px rgb(0, 110, 255), 0 0 20px rgb(1, 224, 224);
+    }
+}
+
+@keyframes flameEffect_white {
+    0% {
+        color: white;
+        text-shadow: 0 0 2px white, 0 0 4px rgba(201, 136, 15, 0.811);
+    }
+    25% {
+        color: white;
+        text-shadow: 0 0 2px white, 0 0 4px rgb(163, 163, 11);
+    }
+    50% {
+        color: white;
+        text-shadow: 0 0 2px white, 0 0 4px rgba(255, 255, 255, 0.5);
+    }
+    75% {
+        color: white;
+        text-shadow: 0 0 2px white, 0 0 4px rgb(244, 192, 97);
+    }
+    100% {
+        color: white;
+        text-shadow: 0 0 2px white, 0 0 4px yellow;
+    }
+}
+
+body {
+    background-color: black;
+    font-family: monospace;
+}
+
+#paragraph {
+    font-weight: bold;
+    font-size: 45px;
+    color: hsla(0, 14%, 77%, 0.526);
+}
+
+.typing_paragraphe {
+    position: absolute;
+    margin-top: 23vh;
+    border: 8px solid;
+    border-radius: 10px;
+    padding: 30px;
+    animation: flameEffect 4s infinite alternate;
+    margin-left: 0px;
+}
+
+.wpm {
+    font-size: 60px;
+    text-align: center;
+    margin-top: 60px;
+    animation: flameEffect_white 2.5s infinite alternate;
+}
