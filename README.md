@@ -8,7 +8,7 @@ This is a simple typing game that challenges users to type words as quickly and 
 3. The game will track your speed and accuracy.
 
 ## How to Access:
-Visit <a href="https://moadvi.github.io/WordTyping/" target="_blank">Your GitHub Pages URL here</a>.
+Visit [Speed Type](https://moadvi.github.io/WordTyping/).
 
 ## Requirements:
 - No special requirements; works on most modern browsers.
