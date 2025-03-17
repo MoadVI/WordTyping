@@ -1,1 +1,1 @@
-# WordTyping
+# Speed Type
