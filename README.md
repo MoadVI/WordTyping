@@ -1,1 +1,2 @@
-# Speed Type
+# Word Typing
+
