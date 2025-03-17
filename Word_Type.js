@@ -11,7 +11,28 @@ let correct_words = 0;
 let currentWordHasError = false; 
 let isTestFinished = false; 
 let sentences = [
-  'the sky was painted in shades of orange and pink as the sun dipped below the horizon'
+'the sky was painted in shades of orange and pink as the sun dipped below the horizon',
+  'the evening breeze carried the scent of blooming flowers',
+  'birds flew low across the water, casting fleeting shadows',
+  'the last light of the day glimmered on the surface of the lake',
+  'clouds turned into soft, wispy streaks of lavender',
+  'the warmth of the sun lingered for just a moment longer',
+  'the sound of distant waves gently breaking on the shore added to the peaceful ambiance',
+  'the colors in the sky deepened as night slowly crept in',
+  'a distant lighthouse blinked rhythmically against the growing darkness',
+  'the stars began to make their first appearance, dotting the velvet sky',
+  'the temperature dropped slightly, signaling the arrival of night',
+  'the gentle rustle of leaves filled the silence',
+  'the water reflected the fiery hues of the sky, creating a mirror image',
+  'the moon began to rise slowly, casting a soft glow on the horizon',
+  'a few crickets started their nightly song, adding a soundtrack to the evening',
+  'the fading light of the sun left behind a soft glow on the distant mountains',
+  'fireflies flickered across the meadow, adding their own tiny constellations',
+  'the air smelled of saltwater mixed with earth after the days heat',
+  'a solitary boat drifted lazily across the bay, silhouetted against the sky',
+  'the evening stars began to twinkle more brightly, one by one',
+  'the soft, rhythmic sound of the water was soothing to the soul',
+  'night had officially arrived, but the beauty of the dusk still hung in the air'
 ];
 let total_length = sentences.join("").replace(/ /g, "").length;
 let timerInterval;
