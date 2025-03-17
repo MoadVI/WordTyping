@@ -11,14 +11,10 @@ let correct_words = 0;
 let currentWordHasError = false; 
 let isTestFinished = false; 
 let sentences = [
-  'the sky was painted in shades of orange and pink as the sun dipped below the horizon', 
-   'casting long shadows across the quiet streets a gentle breeze rustled the leaves of',
-  'the old oak trees lining the sidewalk carrying the faint scent of rain from a storm',
-  'that had passed earlier in the afternoon in the distance the soft hum of traffic ',
-  'blended with the occasional chirp of crickets creating a soothing evening symphony'
+  'the sky was painted in shades of orange and pink as the sun dipped below the horizon'
 ];
 let total_length = sentences.join("").replace(/ /g, "").length;
-
+let timerInterval;
 
 function update_timer(timer) {
     Clock.innerHTML = `
@@ -59,22 +55,58 @@ let start_session = Date.now();
 
 const handleFirstKeydown = (event) => {
   start_time = Date.now(); 
-  document.removeEventListener("keydown", handleFirstKeydown);
   start_session = Date.now();
+  document.removeEventListener("keydown", handleFirstKeydown);
+  timerInterval = setInterval(updateTimer, 1000);
 };
-
 
 document.addEventListener("keydown", handleFirstKeydown);
 
+function updateTimer() {
+  const currentTime = Date.now();
+  const elapsed = (currentTime - start_session) / 1000;
+  update_timer(elapsed);
+
+  const total_time_passed = (currentTime - start_time) / 1000;
+  if (total_time_passed > 0) {
+    const current_wpm = correct_words * 60 / total_time_passed;
+    update_wpm(current_wpm);
+  }
+
+  if (elapsed >= TimeLimit) {
+    if (j + 1 < sentences.length) {
+      j++;
+      start_session = Date.now();
+      UpdateState();
+    } else {
+      endTest();
+      clearInterval(timerInterval);
+    }
+  }
+}
+
+function endTest() {
+  const final_time = (Date.now() - start_time) / 1000;
+  const accuracy = (correct_characters / all_characters) * 100;
+  const final_wpm = correct_words * 60 / final_time;
+
+  WordsPerMinute.style.display = 'none';
+  Clock.style.display = 'none';
+  paragraph.innerHTML = `
+    <span style="animation: flameEffect_white 2.5s infinite alternate;">Accuracy: ${accuracy.toFixed(0)}%</span><br>
+    <span style="animation: flameEffect_white 2.5s infinite alternate;">WPM: ${final_wpm.toFixed(0)}</span>
+  `;
+  isTestFinished = true;
+
+  let container = document.getElementById("type");
+  if (container) container.style.marginLeft = "500px";
+}
 
 function handleTyping(event) {
-    
   if (isTestFinished) return; 
 
   let end_time = Date.now();
   let time_passed = (end_time - start_time) / 1000;
-  let timer = (end_time - start_session) / 1000;
-  
 
   if (event.key === "Backspace" && i > 0) { 
     i--;
@@ -86,7 +118,6 @@ function handleTyping(event) {
     paragraph.innerHTML = displayedText.join("");
     return;
   }
-
 
   if (i < originalText.length) { 
     let expectedChar = originalText[i];
@@ -102,7 +133,6 @@ function handleTyping(event) {
       j++;
       start_session = Date.now();
       UpdateState();
-      update_timer();
       return;
     }
 
@@ -130,78 +160,20 @@ function handleTyping(event) {
     else return;
     paragraph.innerHTML = displayedText.join("");
   }
-  
 
-  let wpm = correct_words * 60 / time_passed;
-  update_wpm(wpm);
-  update_timer(timer);
-
-  if (i === originalText.length && j+1 < sentences.length) {
-    j++;
-    start_session = Date.now();
-    UpdateState();
-    update_timer();
-  }
-
-
-  if (timer > TimeLimit) {
-   
-    if (j+1 !== sentences.length) {
-        j++;
-        UpdateState();
-        start_session = Date.now();
-        update_timer();
-
+  if (i === originalText.length) {
+    if (j +1 < sentences.length) {
+      j++;
+      start_session = Date.now();
+      UpdateState();
     } else {
-        const final_time = (Date.now() - start_time) / 1000;
-        const accuracy = (correct_characters / all_characters) * 100;
-        const final_wpm = correct_words * 60 / final_time;
-        WordsPerMinute.style.display = 'none';
-        Clock.style.display = 'none';
-        let result = document.createElement("div");
-        result.textContent = "WPM: "+ final_wpm.toFixed(0);
-        result.classList.add("wpm");
-        paragraph.appendChild(result);
-    
-        paragraph.innerHTML = `
-          <span style="animation: flameEffect_white 2.5s infinite alternate;">Accuracy: ${accuracy.toFixed(0)}%</span><br>
-          <span style="animation: flameEffect_white 2.5s infinite alternate;">WPM: ${final_wpm.toFixed(0)}</span>
-        `;
-        update_wpm(final_wpm); 
-        isTestFinished = true; 
-    
-        let container = document.getElementById("type");
-        if (container) container.style.marginLeft = "500px";
-      }
-  }
-
-  
-  if (j+1 === sentences.length && i === originalText.length) {
-    const final_time = (Date.now() - start_time) / 1000;
-    const accuracy = (correct_characters / total_length) * 100;
-    const final_wpm = correct_words * 60 / final_time;
-    WordsPerMinute.style.display = 'none';
-    Clock.style.display = 'none';
-    let result = document.createElement("div");
-    result.textContent = "WPM: "+ final_wpm.toFixed(0);
-    result.classList.add("wpm");
-    paragraph.appendChild(result);
-
-    paragraph.innerHTML = `
-      <span style="animation: flameEffect_white 2.5s infinite alternate;">Accuracy: ${accuracy.toFixed(0)}%</span><br>
-      <span style="animation: flameEffect_white 2.5s infinite alternate;">WPM: ${final_wpm.toFixed(0)}</span>
-    `;
-    update_wpm(final_wpm); 
-    isTestFinished = true; 
-
-    let container = document.getElementById("type");
-    if (container) container.style.marginLeft = "500px";
+      endTest();
+      clearInterval(timerInterval);
+    }
   }
 }
 
-
 document.addEventListener("keydown", handleTyping);
-
 
 document.addEventListener("keydown", function(event) {
     if (isTestFinished && event.key === "Enter") {
@@ -211,15 +183,16 @@ document.addEventListener("keydown", function(event) {
         correct_words = 0;
         currentWordHasError = false;
         isTestFinished = false;
-        wpm = 0;
-        update_timer();
-        update_wpm(wpm);  
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+        update_timer(0);
+        update_wpm(0);
         Clock.style.display = 'block';      
         WordsPerMinute.style.display = 'block';
         let container = document.getElementById("type");
         if (container) container.style.marginLeft = "0"; 
         UpdateState();
-
         document.addEventListener("keydown", handleFirstKeydown);
     }
 });
